@@ -1,0 +1,74 @@
+﻿@model BudgetBuilder.Models.TradeModels
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TradeModels</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Building.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Building.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubCategory)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubCategory)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaterialCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MaterialCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LaborCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LaborCost)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TradeBudget)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TradeBudget)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TradeCost)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TradeCost)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.TradeModelsID }) |
+    @Html.ActionLink("Back to List", "Index", new { id = Model.TradeModelsID })
+</p>
