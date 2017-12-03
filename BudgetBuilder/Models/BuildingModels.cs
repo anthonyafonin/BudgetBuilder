@@ -18,7 +18,7 @@ namespace BudgetBuilder.Models
         public string Title { get; set; }
         public double Budget { get; set; }
         public double BuildingProfit { get; set; }
-
+        
         // Foreign Key of AspNetUsers
         public string ApplicationUserID { get; set; }
 
