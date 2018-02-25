@@ -1,5 +1,5 @@
 # BudgetBuilder
-An ASP.NET MVC Web Application that Manages Budgets when Remodeling Buildings.
+An ASP.NET MVC Web Application that Manages Budgets when Remodeling Buildings Projects.
 
 
 This application allows a user to create an account and add new building projects with budgeted pricing.
