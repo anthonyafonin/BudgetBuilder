@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using BudgetBuilder.Models;
 using Microsoft.AspNet.Identity;
+using System.Diagnostics;
 
 namespace BudgetBuilder.Controllers
 {
@@ -19,11 +20,13 @@ namespace BudgetBuilder.Controllers
         // GET: BuildingModels
         public ActionResult Index()
         {
-            // find current User Id
+            // Store current User Id
             string thisId = User.Identity.GetUserId();
-
-            var buildingModels = db.BuildingModels.Include(b => b.User).Where(fk => fk.ApplicationUserID == thisId);
-            return View(buildingModels.ToList());
+     
+            // Select BuildingsModels where foreign key is equal to current User Id
+            var buildingModels = db.BuildingModels.Include(b => b.User).Include(t=>t.Trade).Where(fk => fk.ApplicationUserID == thisId).ToList();
+    
+            return View(buildingModels);
         }
 
         // GET: BuildingModels/Details/5
@@ -49,8 +52,6 @@ namespace BudgetBuilder.Controllers
         }
 
         // POST: BuildingModels/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "BuildingModelsID,Title,Budget,BuildingProfit,ApplicationUserID")] BuildingModels buildingModels)
@@ -59,8 +60,6 @@ namespace BudgetBuilder.Controllers
             {
                 db.BuildingModels.Add(buildingModels);
                 db.SaveChanges();
-
-                //return RedirectToAction("Index", new { id = buildingModels.ApplicationUserID });
 
                 return RedirectToAction("Index");
             }
@@ -86,8 +85,6 @@ namespace BudgetBuilder.Controllers
         }
 
         // POST: BuildingModels/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "BuildingModelsID,Title,Budget,BuildingProfit,ApplicationUserID")] BuildingModels buildingModels)

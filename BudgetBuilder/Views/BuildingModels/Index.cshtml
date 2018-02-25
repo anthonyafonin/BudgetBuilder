@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    double? totalCost;
 }
 
 <h2>Index</h2>
@@ -21,12 +22,19 @@
             @Html.DisplayNameFor(model => model.Budget)
         </th>
         <th>
+            Total Trade Cost
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.BuildingProfit)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model)
+{
+        // Store the sum of each Model's TradeCost
+        totalCost = item.Trade.Sum(e => e.TradeCost);
+    
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.User.FirstName)
@@ -36,6 +44,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Budget)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => totalCost)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.BuildingProfit)

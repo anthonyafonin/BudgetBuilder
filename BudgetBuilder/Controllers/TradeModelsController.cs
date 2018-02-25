@@ -17,6 +17,9 @@ namespace BudgetBuilder.Controllers
         // GET: TradeModels
         public ActionResult Index(int? id)
         {
+
+            ViewBag.BuildingModelID = id;
+
             // Return view of lists based on passed Building ID
             var tradeModels = db.TradeModels.Include(t => t.Building).Where(pk => pk.BuildingModelsID == id);
             return View(tradeModels.ToList());
@@ -41,8 +44,11 @@ namespace BudgetBuilder.Controllers
 
         // GET: TradeModels/Create
         public ActionResult Create(int? id)
-        {          
+        {
+            ViewBag.ReturnID = id;
             ViewBag.BuildingModelsID = new SelectList(db.BuildingModels, "BuildingModelsID", "Title", id);
+            // find and return teh TradeModel with the current id
+            TradeModels tradeModels = db.TradeModels.Find(id);
             return View();
         }
 
