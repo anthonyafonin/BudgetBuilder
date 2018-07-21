@@ -1,0 +1,18 @@
+﻿@model BudgetBuilder.Models.BuildingModels
+
+@{
+    ViewBag.Title = "App";
+}
+
+<h2>Budget Builder Application</h2>
+
+<building-form/>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    
+}

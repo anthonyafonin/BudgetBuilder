@@ -12,13 +12,14 @@ namespace BudgetBuilder.Models
     public class BuildingModels
     {
         // Table properties
-        // TODO - data annotations
         [Key]
         public int BuildingModelsID { get; set; }
         public string Title { get; set; }
         public double Budget { get; set; }
-        public double BuildingProfit { get; set; }
-        
+
+        public DateTime? DateAdded { get; set; }
+        public DateTime? DateModified { get; set; }
+
         // Foreign Key of AspNetUsers
         public string ApplicationUserID { get; set; }
 
@@ -27,5 +28,11 @@ namespace BudgetBuilder.Models
 
         // Collection of Child TradeModels
         public ICollection<TradeModels> Trade { get; set; }
+    }
+
+    public class BuildingRequestModel
+    {
+        public string UserID { get; set; }
+        public int? BuildingModelsID { get; set; }
     }
 }

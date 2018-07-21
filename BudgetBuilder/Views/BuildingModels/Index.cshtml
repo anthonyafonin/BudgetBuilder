@@ -24,17 +24,12 @@
         <th>
             Total Trade Cost
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BuildingProfit)
-        </th>
+
         <th></th>
     </tr>
 
 @foreach (var item in Model)
 {
-        // Store the sum of each Model's TradeCost
-        totalCost = item.Trade.Sum(e => e.TradeCost);
-    
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.User.FirstName)
@@ -45,12 +40,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.Budget)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => totalCost)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BuildingProfit)
-        </td>
+  
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.BuildingModelsID }) |
             @Html.ActionLink("Details", "Details", new { id=item.BuildingModelsID }) |

@@ -11,7 +11,6 @@ namespace BudgetBuilder.Models
     public class ApplicationUser : IdentityUser
     {
         // Table properties
-        // TODO - data annotations
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
@@ -25,29 +24,5 @@ namespace BudgetBuilder.Models
             // Add custom user claims here
             return userIdentity;
         }
-    }
-
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
-
-        public static ApplicationDbContext Create()
-        {
-            return new ApplicationDbContext();
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-
-            //modelBuilder.Entity<ApplicationUser>().Property(p => p.Id).HasColumnName("ApplicationUserId");
-        }
-
-        //public System.Data.Entity.DbSet<ApplicationUser> ApplicationUser { get; set; }
-        public System.Data.Entity.DbSet<BudgetBuilder.Models.BuildingModels> BuildingModels { get; set; }
-        public System.Data.Entity.DbSet<BudgetBuilder.Models.TradeModels> TradeModels { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace BudgetBuilder.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(BudgetBuilder.Models.ApplicationDbContext context)

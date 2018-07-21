@@ -30,7 +30,6 @@ namespace BudgetBuilder.Models
         public double MaterialCost { get; set; }
         public double LaborCost { get; set; }
         public double TradeBudget { get; set; }
-        public double TradeCost { get; set; }
 
         // Foreign key of BuildingModel
         public int BuildingModelsID { get; set; }
