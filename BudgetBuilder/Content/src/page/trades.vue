@@ -1,6 +1,6 @@
 ﻿<template>
     <div class="trades">
-        Hello trades
+        Trades
     </div>
 </template>
 
@@ -23,7 +23,6 @@
 
         },
         beforeMount: function(){
-
         },
         beforeRouteLeave: function (to, from, next) {
             next();

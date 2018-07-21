@@ -8,10 +8,12 @@ require("babel-polyfill");
 Vue.use(Vuex, VueCookies);
 var vue = new Vue();
 
+import buildings from '@/store/modules/buildings'
+
 export default new Vuex.Store(
     {
         modules: {
-
+            buildings: buildings
         },
         state: {
             profile: ''
@@ -48,6 +50,13 @@ export default new Vuex.Store(
             },
             logout: function ({ commit, state }, profile) {
                 commit('login')
+            },
+            refreshBuildings: function ({ commit, state, getters }) {
+                api().post('Buildings/List', {
+                    UserID: getters.getProfile.UserID
+                }).then(function (r) {
+                    commit('setBuildings', r.Buildings);
+                })
             }
         }
     }

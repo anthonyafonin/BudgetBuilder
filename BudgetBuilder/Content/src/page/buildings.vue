@@ -1,8 +1,12 @@
 ﻿<template>
     <div class="buildings">
-        Hello Buildings
-        <div class="building" v-for="(building, index) in buildings">
-            {{building.BuildingModelsID}} - {{building.Title}} - {{building.Budget}} - {{building.DateAdded}} - {{building.DateModified}}
+        Buildings
+        <div class="building card mb-2" v-for="(building, index) in buildings"
+             @click="selectBuilding(building)">
+            <div class="card-body">
+                {{building.BuildingModelsID}} - {{building.Title}} - {{building.Budget}} - {{building.DateAdded}} - {{building.DateModified}}
+
+            </div>
         </div>
     </div>
 </template>
@@ -16,11 +20,13 @@
         },
         data: function () {
             return {
-                buildings: []
+                
             }
         },
         computed: {
-
+            buildings: function () {
+                return this.$store.getters.getBuildings;
+            }
         },
         methods: {
 
@@ -40,20 +46,14 @@
             deleteBuilding: function () {
 
             },
-            loadBuilding: function () {
-
-            },
-            refreshBuildings: function () {
-                var vm = this;
-                api().post('Buildings/List', {
-                    UserID: vm.$store.getters.getProfile.UserID
-                }).then(function (r) {
-                    vm.buildings = r.Buildings;
-                })
+            selectBuilding: function (building) {
+                this.$store.dispatch('selectBuilding', building);
+                this.$router.push({ name: 'Trades' });
             }
+
         },
         beforeMount: function () {
-            this.refreshBuildings();
+            this.$store.dispatch('refreshBuildings');
         },
         beforeRouteLeave: function (to, from, next) {
             next();

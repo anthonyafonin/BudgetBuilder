@@ -23,7 +23,7 @@ namespace BudgetBuilder.Controllers
      
             // Select BuildingsModels where foreign key is equal to current User Id
             var buildingModels = db.BuildingModels.Where(fk => fk.ApplicationUserID == userId)
-                .Select(r => new { r.Title, r.Budget, r.DateAdded, r.DateModified, r.BuildingModelsID }).ToList();
+                .Select(r => new { r.Title, r.Budget, r.DateAdded, r.DateModified, r.BuildingModelsID, r.Trade }).ToList();
     
             return Json(new { Buildings = buildingModels });
         }
@@ -56,7 +56,6 @@ namespace BudgetBuilder.Controllers
 
         // POST: BuildingModels/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit(BuildingModels request)
         {
             if (ModelState.IsValid)
@@ -74,24 +73,8 @@ namespace BudgetBuilder.Controllers
             return View(request);
         }
 
-        // GET: BuildingModels/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            BuildingModels buildingModels = db.BuildingModels.Find(id);
-            if (buildingModels == null)
-            {
-                return HttpNotFound();
-            }
-            return View(buildingModels);
-        }
-
         // POST: BuildingModels/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             BuildingModels buildingModels = db.BuildingModels.Find(id);

@@ -1,7 +1,6 @@
 ﻿<template>
-    <div class="wrapper">
-        <div id="app">   
-            Hello World.         
+    <div class="wrapper container-fluid">
+        <div id="app" class="container">     
             <router-view></router-view>            
         </div>
     </div>
