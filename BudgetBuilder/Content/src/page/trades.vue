@@ -1,6 +1,10 @@
 ﻿<template>
     <div class="trades">
         Trades
+
+        <div class="clearfix">
+            <router-link :to="{name: 'Buildings'}"><b-button class="float-left" :variant="'outline-primary'">Back to Buildings</b-button></router-link>
+        </div>
     </div>
 </template>
 

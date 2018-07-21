@@ -16,6 +16,7 @@ namespace BudgetBuilder.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        [HttpPost]
         public ActionResult List(BuildingRequestModel request)
         {
             // Store current User Id
@@ -28,6 +29,7 @@ namespace BudgetBuilder.Controllers
             return Json(new { Buildings = buildingModels });
         }
 
+        [HttpPost]
         public ActionResult Details(BuildingRequestModel request)
         {
             if (request.BuildingModelsID == null)
@@ -42,45 +44,55 @@ namespace BudgetBuilder.Controllers
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
-        
+
+        [HttpPost]
         public ActionResult Create(BuildingModels request)
         {
+            bool success = false;
+
             if (ModelState.IsValid)
             {
+                DateTime timestamp = DateTime.Now;
+                request.DateAdded = timestamp;
+                request.DateModified = timestamp;
+
                 db.BuildingModels.Add(request);
                 db.SaveChanges();
+                success = true;
+
+                BuildingModels building = db.BuildingModels.Find(request.BuildingModelsID);
+
+                return Json(new { Success = success, Building = building });
             }
 
-            return Json(new { Success = true });
+            return Json(new { Success = success });
         }
 
-        // POST: BuildingModels/Edit/5
         [HttpPost]
-        public ActionResult Edit(BuildingModels request)
+        public ActionResult Update(BuildingModels request)
         {
             if (ModelState.IsValid)
             {
+                DateTime timestamp = DateTime.Now;
+                request.DateModified = timestamp;
+
                 db.Entry(request).State = EntityState.Modified;
                 db.SaveChanges();
 
-                BuildingRequestModel lookup = new BuildingRequestModel
-                {
-                    BuildingModelsID = request.BuildingModelsID
-                };
+                BuildingModels building = db.BuildingModels.Find(request.BuildingModelsID);
 
-                return Json(new { Success = true, Building = Details(lookup) });
+                return Json(new { Success = true, Building = building });
             }
-            return View(request);
+            return Json(new { Success = false });
         }
 
-        // POST: BuildingModels/Delete/5
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public ActionResult Delete(BuildingRequestModel request)
         {
-            BuildingModels buildingModels = db.BuildingModels.Find(id);
-            db.BuildingModels.Remove(buildingModels);
+            BuildingModels building = db.BuildingModels.Find(request.BuildingModelsID);
+            db.BuildingModels.Remove(building);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Json(new { Success = true } );
         }
 
         protected override void Dispose(bool disposing)

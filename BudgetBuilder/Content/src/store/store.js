@@ -30,14 +30,14 @@ export default new Vuex.Store(
             login: function (state, profile) {
                 localStorage.setItem('token', profile.UserID)
                 state.profile = profile;
-                router.push('/');
+                router.push({name: 'Buildings'});
             },
             logout: function (state) {
                 api().post('Account/Logout').then(function (r) {
                     console.log('Logout -', r)
                     localStorage.removeItem('token');
                     state.profile = '';
-                    router.push('/');
+                    router.push({name: 'Portal'});
                 });
             }
         },

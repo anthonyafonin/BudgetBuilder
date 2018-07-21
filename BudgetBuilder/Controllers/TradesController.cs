@@ -15,7 +15,7 @@ namespace BudgetBuilder.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: TradeModels
-        public ActionResult Index(int? id)
+        public ActionResult List(int? id)
         {
 
             ViewBag.BuildingModelID = id;
@@ -26,37 +26,7 @@ namespace BudgetBuilder.Controllers
 
         }
 
-        // GET: TradeModels/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TradeModels tradeModels = db.TradeModels.Find(id);
-            if (tradeModels == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tradeModels);
-        }
-
-
-        // GET: TradeModels/Create
-        public ActionResult Create(int? id)
-        {
-            ViewBag.ReturnID = id;
-            ViewBag.BuildingModelsID = new SelectList(db.BuildingModels, "BuildingModelsID", "Title", id);
-            // find and return teh TradeModel with the current id
-            TradeModels tradeModels = db.TradeModels.Find(id);
-            return View();
-        }
-
-        // POST: TradeModels/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "TradeModelsID,Category,SubCategory,MaterialCost,LaborCost,TradeBudget,TradeCost,BuildingModelsID")] TradeModels tradeModels)
         {
             if (ModelState.IsValid)
@@ -70,27 +40,8 @@ namespace BudgetBuilder.Controllers
             return View(tradeModels);
         }
 
-        // GET: TradeModels/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TradeModels tradeModels = db.TradeModels.Find(id);
-            if (tradeModels == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.BuildingModelsID = new SelectList(db.BuildingModels, "BuildingModelsID", "Title", tradeModels.BuildingModelsID);
-            return View(tradeModels);
-        }
-
         // POST: TradeModels/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "TradeModelsID,Category,SubCategory,MaterialCost,LaborCost,TradeBudget,TradeCost,BuildingModelsID")] TradeModels tradeModels)
         {
             if (ModelState.IsValid)
@@ -103,24 +54,8 @@ namespace BudgetBuilder.Controllers
             return View(tradeModels);
         }
 
-        // GET: TradeModels/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TradeModels tradeModels = db.TradeModels.Find(id);
-            if (tradeModels == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tradeModels);
-        }
-
         // POST: TradeModels/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             TradeModels tradeModels = db.TradeModels.Find(id);

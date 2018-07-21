@@ -229,6 +229,7 @@
     <Content Include="Content\src\services\filters.js" />
     <Content Include="Content\src\services\mixins.js" />
     <Content Include="Content\src\services\router.js" />
+    <Content Include="Content\src\store\modules\buildings.js" />
     <Content Include="Content\src\store\store.js" />
     <Content Include="favicon.ico" />
     <Content Include="Content\dist\fonts\glyphicons-halflings-regular.svg" />
@@ -255,7 +256,6 @@
     <Folder Include="Content\less\app\page\" />
     <Folder Include="Content\src\components\" />
     <Folder Include="Content\src\plugins\" />
-    <Folder Include="Content\src\store\modules\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\dist\fonts\glyphicons-halflings-regular.woff" />
