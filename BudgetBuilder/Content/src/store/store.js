@@ -33,9 +33,8 @@ export default new Vuex.Store(
                 router.push({name: 'Buildings'});
             },
             logout: function (state) {
+                localStorage.removeItem('token');
                 api().post('Account/Logout').then(function (r) {
-                    console.log('Logout -', r)
-                    localStorage.removeItem('token');
                     state.profile = '';
                     router.push({name: 'Portal'});
                 });
@@ -49,7 +48,7 @@ export default new Vuex.Store(
                 commit('login', profile)
             },
             logout: function ({ commit, state }, profile) {
-                commit('login')
+                commit('logout')
             },
             refreshBuildings: function ({ commit, state, getters }) {
                 api().post('Buildings/List', {

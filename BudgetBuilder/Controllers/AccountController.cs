@@ -53,6 +53,28 @@ namespace BudgetBuilder.Controllers
         }
 
         [HttpPost]
+        public async Task<ActionResult> Details(AccountRequestModel request)
+        {
+
+            var user = await UserManager.FindByIdAsync(request.ApplicationUserID);
+
+            if(user != null)
+            {
+                var profile = new
+                {
+                    UserID = user.Id,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                };
+                return Json(new { Success = true, User = profile });
+            }
+
+           return Json(new { Success = false });
+        }
+
+
+        [HttpPost]
         public async Task<ActionResult> Login(LoginViewModel request)
         {
 

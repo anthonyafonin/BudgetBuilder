@@ -115,4 +115,9 @@ namespace BudgetBuilder.Models
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+    public class AccountRequestModel
+    {
+        public string ApplicationUserID { get; set; }
+    }
 }

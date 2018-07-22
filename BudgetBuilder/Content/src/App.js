@@ -16,6 +16,8 @@ import router from '@/services/router';
 import store from '@/store/store';
 import '@/services/filters';
 import mixins from '@/services/mixins';
+import api from '@/services/api';
+
 Vue.mixin(mixins);
 
 router.push('/Portal');
@@ -34,7 +36,17 @@ const app = new Vue({
         return r(App);
     },
     beforeCreate: function () {
-        
+        var token = localStorage.getItem('token');
+        var vm = this;
+        if (token) {
+            api().post('Account/Details', { ApplicationUserID: token })
+                .then(function (r) {
+                    console.log(r)
+                    if (r.Success) {
+                        vm.$store.dispatch('login', r.User);
+                    }
+                });
+        }
     },
     methods: {
         init: function () {
@@ -48,7 +60,12 @@ router.beforeResolve(function (to, from, next) {
 });
 
 router.beforeEach(function (to, from, next) {
-    next();
+    if (!localStorage.getItem('token') && to.path !== '/Portal') {
+        console.log('Unauthorized');
+        next('/Portal');
+    } else {
+        next();
+    }
 });
 
 router.afterEach(function (to, from) {

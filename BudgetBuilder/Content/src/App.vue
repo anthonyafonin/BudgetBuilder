@@ -3,15 +3,20 @@
         <div id="app" class="mt-5 position-relative">
             <nav class="navbar navbar-dark fixed-top bg-dark">
                 <b-link class="navbar-brand" :to="{name: 'Buildings'}">Budget Builder</b-link>
-                <b-nav-text right>{{profile.FirstName + ' ' + profile.LastName}}</b-nav-text>
+               
+                <div right v-if="profile">
+                    <b-nav-text class="pr-4">{{profile.FirstName + ' ' + profile.LastName}}</b-nav-text>
+                    <b-btn @click="logout" variant="outline-secondary">Logout</b-btn>
+                </div>
+               
             </nav>
+
             <b-container class="pt-5 pb-5">
-                <b-jumbotron header="Budget Builder"
-                             lead="Manage your budget on different building projects!">
-                </b-jumbotron>
+                <!-- Main view -->
                 <router-view></router-view>
             </b-container>
-            <b-alert class="fixed-bottom container"
+
+            <b-alert v-if="profile" class="fixed-bottom container"
                      variant="success"
                      :show="dismissCountDown"
                      dismissible
@@ -29,6 +34,8 @@
 </template>
 
 <script>
+    
+
     module.exports = {
         components: {
 
@@ -37,6 +44,7 @@
             return {
                 dismissSecs: 3,
                 dismissCountDown: 3,
+                router: this.$router
             }
         },
         methods: {
@@ -45,6 +53,9 @@
             },
             showAlert: function() {
                 this.dismissCountDown = this.dismissSecs
+            },
+            logout: function () {
+                this.$store.dispatch('logout')
             }
         },
         computed: {
@@ -52,6 +63,9 @@
                 return this.$store.getters.getProfile;
             },
             
+        },
+        beforeMount: function () {
+ 
         }
     }
 </script>
