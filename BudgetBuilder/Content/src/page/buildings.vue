@@ -1,7 +1,6 @@
 ﻿<template>
     <div class="building-view">
-        <h2>Buildings</h2>
-
+        <h1 class="mb-4">Buildings</h1>
         <div class="clearfix">
             <b-button class="float-right" @click="displayBuildingModal" :variant="'outline-success'">New Building +</b-button>
         </div>

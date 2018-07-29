@@ -20,7 +20,7 @@ import api from '@/services/api';
 
 Vue.mixin(mixins);
 
-router.push('/Portal');
+router.push('/');
 
 // Create main vue instance
 const app = new Vue({
@@ -39,13 +39,11 @@ const app = new Vue({
         var token = localStorage.getItem('token');
         var vm = this;
         if (token) {
-            api().post('Account/Details', { ApplicationUserID: token })
-                .then(function (r) {
-                    console.log(r)
-                    if (r.Success) {
-                        vm.$store.dispatch('login', r.User);
-                    }
-                });
+            api().post('Account/Details', { ApplicationUserID: token }).then(function (r) {
+                if (r.Success) {
+                    vm.$store.dispatch('login', r.User);
+                }
+            });
         }
     },
     methods: {

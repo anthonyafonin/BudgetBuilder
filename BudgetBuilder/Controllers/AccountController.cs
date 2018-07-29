@@ -58,15 +58,17 @@ namespace BudgetBuilder.Controllers
 
             var user = await UserManager.FindByIdAsync(request.ApplicationUserID);
 
+
             if(user != null)
             {
-                var profile = new
+                ProfileDetailsModel profile = new ProfileDetailsModel
                 {
                     UserID = user.Id,
-                    Email = user.Email,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
+                    Email = user.Email
                 };
+
                 return Json(new { Success = true, User = profile });
             }
 
@@ -75,26 +77,27 @@ namespace BudgetBuilder.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> Login(LoginViewModel request)
+        public async Task<ActionResult> Login(LoginRequestModel request)
         {
-
             var result = await SignInManager.PasswordSignInAsync(request.Email, request.Password, true, shouldLockout: false);
             var user = await UserManager.FindByNameAsync(request.Email);
 
-            var profile = new {
-                UserID = user.Id,
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-            };
-
-            return result == SignInStatus.Success ? 
-                Json(new { Success = true, User = profile }) : Json(new { Success = false });
+            if (result == SignInStatus.Success)
+            {
+                ProfileDetailsModel profile = new ProfileDetailsModel
+                {
+                    UserID = user.Id,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    Email = user.Email
+                };
+                Json(new { Success = true, User = profile });
+            }
+          
+            return Json(new { Success = false });
 
         }
 
-        //
-        // POST: /Account/LogOff
         [HttpPost]
         public ActionResult Logout()
         {
@@ -102,41 +105,34 @@ namespace BudgetBuilder.Controllers
             return Json(new { Success = true });
         }
 
-
-        //
-        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterRequestModel model)
         {
+            IdentityResult result = new IdentityResult();
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
-                    // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    ProfileDetailsModel profile = new ProfileDetailsModel
+                    {
+                        UserID = user.Id,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        Email = user.Email
+                    };
 
-                    //return RedirectToAction("Index", "Home");
+                    return Json(new { Success = true, User = profile });
                 }
-                AddErrors(result);
             }
-
-            // If we got this far, something failed, redisplay form
-            return Json(model);
+            return Json(new { Success = false, Message = result.Errors });
         }
 
-        //
-        // POST: /Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordRequestModel model)
         {
             if (ModelState.IsValid)
             {
@@ -155,15 +151,12 @@ namespace BudgetBuilder.Controllers
                  //return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
-            // If we got this far, something failed, redisplay form
-            return Json(model);
+            return Json(new {Success = false, Model = model });
         }
 
-        //
-        // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<ActionResult> ResetPassword(ResetPasswordRequestModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -185,72 +178,6 @@ namespace BudgetBuilder.Controllers
             AddErrors(result);
             return Json("reset pass");
         }
-
-        //
-        // POST: /Account/ExternalLogin
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public ActionResult ExternalLogin(string provider, string returnUrl)
-        //{
-        //    // Request a redirect to the external login provider
-        //    return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
-        //}
-
-        //
-        // POST: /Account/SendCode
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public async Task<ActionResult> SendCode(SendCodeViewModel model)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return Json("send code");
-        //    }
-
-        //    // Generate the token and send it
-        //    if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
-        //    {
-        //        return Json("Error");
-        //    }
-        //    return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
-        //}
-
-        //
-        // POST: /Account/ExternalLoginConfirmation
-        //[HttpPost]
-        //[AllowAnonymous]
-        //public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
-        //{
-        //    //if (User.Identity.IsAuthenticated)
-        //    //{
-        //    //    return RedirectToAction("Index", "Manage");
-        //    //}
-
-        //    if (ModelState.IsValid)
-        //    {
-        //        // Get the information about the user from the external login provider
-        //        var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-        //        if (info == null)
-        //        {
-        //            return Json("ExternalLoginFailure");
-        //        }
-        //        var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-        //        var result = await UserManager.CreateAsync(user);
-        //        if (result.Succeeded)
-        //        {
-        //            result = await UserManager.AddLoginAsync(user.Id, info.Login);
-        //            if (result.Succeeded)
-        //            {
-        //                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-        //                return RedirectToLocal(returnUrl);
-        //            }
-        //        }
-        //        AddErrors(result);
-        //    }
-
-        //    ViewBag.ReturnUrl = returnUrl;
-        //    return Json(model);
-        //}
 
 
         protected override void Dispose(bool disposing)

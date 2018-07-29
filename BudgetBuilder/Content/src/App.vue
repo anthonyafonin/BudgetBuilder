@@ -16,44 +16,26 @@
                 <router-view></router-view>
             </b-container>
 
-            <b-alert v-if="profile" class="fixed-bottom container"
-                     variant="success"
-                     :show="dismissCountDown"
-                     dismissible
-                     @dismissed="dismissCountDown=0"
-                     @dismiss-count-down="countDownChanged">
-                <p>Welcome {{profile.FirstName}}!</p>
-                <b-progress variant="success"
-                            :max="dismissSecs"
-                            :value="dismissCountDown"
-                            height="4px">
-                </b-progress>
-            </b-alert>
+            <transition enter-active-class="">
+                <b-alert class="fixed-bottom container" v-if="prompt.display" :show="prompt.display" :variant="prompt.type" dismissible>
+                    <p>{{prompt.message}}</p>
+                </b-alert>
+            </transition>
         </div>
     </div>
 </template>
 
 <script>
-    
-
     module.exports = {
         components: {
 
         },
         data: function () {
             return {
-                dismissSecs: 3,
-                dismissCountDown: 3,
-                router: this.$router
+
             }
         },
         methods: {
-            countDownChanged: function(dismissCountDown) {
-                this.dismissCountDown = dismissCountDown
-            },
-            showAlert: function() {
-                this.dismissCountDown = this.dismissSecs
-            },
             logout: function () {
                 this.$store.dispatch('logout')
             }
@@ -62,7 +44,9 @@
             profile: function () {
                 return this.$store.getters.getProfile;
             },
-            
+            prompt: function () {
+                return this.$store.getters.getPromptState;
+            }
         },
         beforeMount: function () {
  

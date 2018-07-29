@@ -16,11 +16,19 @@ export default new Vuex.Store(
             buildings: buildings
         },
         state: {
-            profile: ''
+            profile: '',
+            prompt: {
+                display: '',
+                message: '',
+                type: '',
+            }
         },
         getters: {
             getProfile: function (state) {
                 return state.profile;
+            },
+            getPromptState: function (state) {
+                return state.prompt;
             }
         },
         mutations: {
@@ -30,7 +38,7 @@ export default new Vuex.Store(
             login: function (state, profile) {
                 localStorage.setItem('token', profile.UserID)
                 state.profile = profile;
-                router.push({name: 'Buildings'});
+                router.push({ name: 'Buildings' });
             },
             logout: function (state) {
                 localStorage.removeItem('token');
@@ -38,6 +46,21 @@ export default new Vuex.Store(
                     state.profile = '';
                     router.push({name: 'Portal'});
                 });
+            },
+            setPromptState: function (state, obj) {
+                state.prompt = {
+                    display: true,
+                    message: obj.message,
+                    type: obj.type,
+                }
+
+                setTimeout(function () {
+                    state.prompt = {
+                        display: false,
+                        message: '',
+                        type: '',
+                    }
+                }, 3000)
             }
         },
         actions: {
@@ -45,7 +68,11 @@ export default new Vuex.Store(
                 commit('setProfile', profile)
             },
             login: function ({ commit, state }, profile) {
-                commit('login', profile)
+                commit('login', profile);
+                commit('setPromptState', {
+                    message: 'Welcome ' + profile.FirstName + profile.LastName + '!',
+                    type: 'success'
+                });
             },
             logout: function ({ commit, state }, profile) {
                 commit('logout')
@@ -56,6 +83,9 @@ export default new Vuex.Store(
                 }).then(function (r) {
                     commit('setBuildings', r.Buildings);
                 })
+            },
+            setPromptState: function ({ commit, state }, promptState) {
+                commit('setPromptState', promptState);
             }
         }
     }
