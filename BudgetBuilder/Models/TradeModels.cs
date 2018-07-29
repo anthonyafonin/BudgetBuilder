@@ -10,23 +10,24 @@ namespace BudgetBuilder.Models
 {
     public enum TradeName
     {
-        // Enum of Category Types
-        Foundation,
-        Framing,
-        Exterior,
-        Major_Systems,
-        Interior,
-        Details,
-        Other
+        // Category Types
+        Foundation = 0,
+        Framing = 1,
+        Exterior = 3,
+        Interior = 4,
+        MajorSystems = 5,
+        Details = 6,
+        Other = 7
     }
 
     public class TradeModels
     {
         // Table properties
-        // TODO - data annotations
         public int TradeModelsID { get; set; }
+
         public TradeName Category { get; set; }     
         public string SubCategory { get; set; }
+
         public double MaterialCost { get; set; }
         public double LaborCost { get; set; }
         public double TradeBudget { get; set; }

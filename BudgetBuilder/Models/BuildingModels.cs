@@ -27,7 +27,7 @@ namespace BudgetBuilder.Models
         public virtual ApplicationUser User { get; set; }
 
         // Collection of Child TradeModels
-        public ICollection<TradeModels> Trade { get; set; }
+        public ICollection<TradeModels> Trades { get; set; }
     }
 
     public class BuildingRequestModel

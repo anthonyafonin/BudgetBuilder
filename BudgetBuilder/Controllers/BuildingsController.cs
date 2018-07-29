@@ -24,7 +24,7 @@ namespace BudgetBuilder.Controllers
      
             // Select BuildingsModels where foreign key is equal to current User Id
             var buildingModels = db.BuildingModels.Where(fk => fk.ApplicationUserID == userId)
-                .Select(r => new { r.Title, r.Budget, r.DateAdded, r.DateModified, r.BuildingModelsID, r.Trade }).ToList();
+                .Select(r => new { r.Title, r.Budget, r.DateAdded, r.DateModified, r.BuildingModelsID, r.Trades }).ToList();
     
             return Json(new { Buildings = buildingModels });
         }

@@ -1,6 +1,6 @@
 ﻿<template>
     <div class="wrapper container-fluid">
-        <div id="app" class="mt-5 position-relative">
+        <div id="app" class="mt-5 pt-5 pb-5 position-relative">
             <nav class="navbar navbar-dark fixed-top bg-dark">
                 <b-link class="navbar-brand" :to="{name: 'Buildings'}">Budget Builder</b-link>
                
@@ -11,7 +11,7 @@
                
             </nav>
 
-            <b-container class="pt-5 pb-5">
+            <b-container class="card p-4">
                 <!-- Main view -->
                 <router-view></router-view>
             </b-container>

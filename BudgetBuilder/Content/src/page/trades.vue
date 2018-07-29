@@ -1,6 +1,6 @@
 ﻿<template>
     <div class="trades">
-        <h1 class="mb-4">Expenses</h1>
+        <h1 class="mb-4">{{building.Title}}</h1>
         <div class="clearfix">
             <router-link :to="{name: 'Buildings'}">
                 <b-button class="float-left" :variant="'outline-primary'">
@@ -18,19 +18,19 @@
                                 <span class="fas fa-ellipsis-v"></span>
                                 <span class="sr-only">More</span>
                             </template>
-                            <b-dropdown-item-button @click="displayBuildingModal(index)">Edit</b-dropdown-item-button>
-                            <b-dropdown-item-button @click="deleteBuilding(index)">Delete</b-dropdown-item-button>
+                            <!--<b-dropdown-item-button @click="displayBuildingModal(index)">Edit</b-dropdown-item-button>
+                            <b-dropdown-item-button @click="deleteBuilding(index)">Delete</b-dropdown-item-button>-->
                         </b-dropdown>
 
                         <div class="card-body">
-                            <h5>{{building.Title}}</h5>
+                            <h5>{{trade.Category}} - {{trade.SubCategory}}</h5>
                             <p>
-                                <span>Budget: {{building.Budget | formatNumeral('$0,0.00')}}</span><br />
-                                <span v-if="getTradeCostTotal(index)">Expenses: {{getTradeCostTotal(index) | formatNumeral('$0,0.00')}}</span>
+                                <span>Budget: {{trade.Budget | formatNumeral('$0,0[.]00')}}</span><br />
+                                <!--<span v-if="getTradeCostTotal(index)">Expenses: {{getTradeCostTotal(index) | formatNumeral('$0,0[.]00')}}</span>-->
                             </p>
-                            <b-button class="float-right" @click="selectBuilding(building)" :size="'sm'" :variant="'outline-primary'">
+                            <!--<b-button class="float-right" @click="selectBuilding(building)" :size="'sm'" :variant="'outline-primary'">
                                 <span class="fas fa-long-arrow-alt-right fa-lg"></span>
-                            </b-button>
+                            </b-button>-->
                         </div>
                     </div>
                 </div>
@@ -53,8 +53,11 @@
             }
         },
         computed: {
+            building: function () {
+                return this.$store.getters.getSelectedBuilding;
+            },
             expenses: function () {
-                return this.$store.getters.getSelectedBuilding.Trade;
+                return this.building.Trades;
             }
         },
         methods: {

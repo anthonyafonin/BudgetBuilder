@@ -43,6 +43,9 @@ const app = new Vue({
                 if (r.Success) {
                     vm.$store.dispatch('login', r.User);
                 }
+                else {
+                    vm.$store.dispatch('logout');
+                }
             });
         }
     },

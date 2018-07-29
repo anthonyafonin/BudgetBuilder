@@ -20,9 +20,9 @@
                         <div class="card-body">
                             <h5>{{building.Title}}</h5>
                             <p>
-                                <span class="text-primary" >Budget: {{building.Budget | formatNumeral('$0,0.00')}}</span><br />
+                                <span class="text-primary" >Budget: {{building.Budget | formatNumeral('$0,0[.]00')}}</span><br />
                                 <span :class="getTradeCostTotal(index) <= building.Budget ? 'text-success' : 'text-danger'">
-                                    Total Expenses: {{getTradeCostTotal(index) | formatNumeral('$0,0.00')}}
+                                    Total Expenses: {{getTradeCostTotal(index) | formatNumeral('$0,0[.]00')}}
                                 </span>
                             </p>
                             <b-button class="float-right" @click="selectBuilding(building)" :size="'sm'" :variant="'outline-primary'">
@@ -242,9 +242,9 @@
             getTradeCostTotal: function (index) {
                 var building = this.buildings[index];
                 var sum = 0;
-                if (building.Trade) {
-                    for (var i = 0; i < building.Trade.length; i++) {
-                        sum += buildings.Trade[i].TotalCost;
+                if (building.Trades) {
+                    for (var i = 0; i < building.Trades.length; i++) {
+                        sum += buildings.Trades[i].TotalCost;
                     }
                 }
                 return sum;
