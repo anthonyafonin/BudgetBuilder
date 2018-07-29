@@ -20,7 +20,7 @@ import api from '@/services/api';
 
 Vue.mixin(mixins);
 
-router.push('/');
+router.push('/Portal');
 
 // Create main vue instance
 const app = new Vue({

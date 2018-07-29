@@ -20,8 +20,10 @@
                         <div class="card-body">
                             <h5>{{building.Title}}</h5>
                             <p>
-                                <span>Budget: {{building.Budget | formatNumeral('$0,0.00')}}</span><br />
-                                <span v-if="getTradeCostTotal(index)">Expenses: {{getTradeCostTotal(index) | formatNumeral('$0,0.00')}}</span>
+                                <span class="text-primary" >Budget: {{building.Budget | formatNumeral('$0,0.00')}}</span><br />
+                                <span :class="getTradeCostTotal(index) <= building.Budget ? 'text-success' : 'text-danger'">
+                                    Total Expenses: {{getTradeCostTotal(index) | formatNumeral('$0,0.00')}}
+                                </span>
                             </p>
                             <b-button class="float-right" @click="selectBuilding(building)" :size="'sm'" :variant="'outline-primary'">
                                 <span class="fas fa-long-arrow-alt-right fa-lg"></span>
@@ -239,13 +241,13 @@
             },
             getTradeCostTotal: function (index) {
                 var building = this.buildings[index];
+                var sum = 0;
                 if (building.Trade) {
-                    var sum = 0;
                     for (var i = 0; i < building.Trade.length; i++) {
                         sum += buildings.Trade[i].TotalCost;
                     }
-                    return sum;
                 }
+                return sum;
             }
         },
         beforeMount: function () {

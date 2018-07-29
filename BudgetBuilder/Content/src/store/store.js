@@ -70,7 +70,7 @@ export default new Vuex.Store(
             login: function ({ commit, state }, profile) {
                 commit('login', profile);
                 commit('setPromptState', {
-                    message: 'Welcome ' + profile.FirstName + profile.LastName + '!',
+                    message: 'Welcome ' + profile.FirstName + ' ' + profile.LastName + '!',
                     type: 'success'
                 });
             },
