@@ -20,10 +20,10 @@ namespace BudgetBuilder.Models
         Other = 7
     }
 
-    public class TradeModels
+    public class Trade
     {
-        // Table properties
-        public int TradeModelsID { get; set; }
+        [Key]
+        public int TradeID { get; set; }
 
         public TradeName Category { get; set; }     
         public string SubCategory { get; set; }
@@ -33,9 +33,17 @@ namespace BudgetBuilder.Models
         public double TradeBudget { get; set; }
 
         // Foreign key of BuildingModel
-        public int BuildingModelsID { get; set; }
+        public int BuildingID { get; set; }
 
-        [ForeignKey("BuildingModelsID")]
-        public virtual BuildingModels Building { get; set; }
+        [ForeignKey("BuildingID")]
+        public virtual Building Building { get; set; }
+    }
+
+    public class TradesUpdateModel
+    {
+        public string ApplicationUserID { get; set; }
+        public int BuildingID { get; set; }
+
+        public ICollection<Trade> Trades { get; set; }
     }
 }

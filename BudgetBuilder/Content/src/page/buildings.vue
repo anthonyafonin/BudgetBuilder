@@ -189,7 +189,7 @@
                     Title: building.Title,
                     Budget: building.Budget,
                     ApplicationUserID: vm.$store.getters.getProfile.UserID,
-                    BuildingModelsID: building.BuildingModelsID
+                    BuildingID: building.BuildingID
                 }
                 api().post('Buildings/Update', postData).then(function (r) {
                     var index = vm.selectedBuildingIndex;
@@ -209,7 +209,7 @@
                 vm.deletePrompt.visible = true;
 
                 vm.deletePrompt.callback = function () {
-                    api().post('Buildings/Delete', { BuildingModelsID: buildings[index].BuildingModelsID }).then(function (r) {
+                    api().post('Buildings/Delete', { BuildingID: buildings[index].BuildingID }).then(function (r) {
                         buildings.splice(index, 1);
                         vm.$store.dispatch('setBuildings', buildings)
                         vm.deletePrompt.visible = false;

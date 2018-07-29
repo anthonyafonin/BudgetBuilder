@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace BudgetBuilder.Models
 {
-    public class BuildingModels
+    public class Building
     {
         // Table properties
         [Key]
-        public int BuildingModelsID { get; set; }
+        public int BuildingID { get; set; }
         public string Title { get; set; }
         public double Budget { get; set; }
 
@@ -27,12 +27,12 @@ namespace BudgetBuilder.Models
         public virtual ApplicationUser User { get; set; }
 
         // Collection of Child TradeModels
-        public ICollection<TradeModels> Trades { get; set; }
+        public ICollection<Trade> Trades { get; set; }
     }
 
     public class BuildingRequestModel
     {
         public string UserID { get; set; }
-        public int? BuildingModelsID { get; set; }
+        public int? BuildingID { get; set; }
     }
 }

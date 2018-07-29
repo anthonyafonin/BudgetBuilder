@@ -91,7 +91,7 @@ namespace BudgetBuilder.Controllers
                     LastName = user.LastName,
                     Email = user.Email
                 };
-                Json(new { Success = true, User = profile });
+                return Json(new { Success = true, User = profile });
             }
           
             return Json(new { Success = false });

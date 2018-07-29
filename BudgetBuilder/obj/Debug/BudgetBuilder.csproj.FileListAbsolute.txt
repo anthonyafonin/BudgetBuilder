@@ -233,10 +233,9 @@ C:\Users\Anthony\Documents\_Doc\Coding\BudgetBuilder\BudgetBuilder\BudgetBuilder
 C:\Users\Anthony\Documents\_Doc\Coding\BudgetBuilder\BudgetBuilder\BudgetBuilder\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\Users\Anthony\Documents\_Doc\Coding\BudgetBuilder\BudgetBuilder\BudgetBuilder\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\Anthony\Documents\_Doc\Coding\BudgetBuilder\BudgetBuilder\BudgetBuilder\bin\Microsoft.AI.Web.xml
-C:\Users\Anthony\Documents\_Doc\Coding\BudgetBuilder\BudgetBuilder\BudgetBuilder\obj\Debug\BudgetBuilder.csprojAssemblyReference.cache
-C:\Users\Anthony\Documents\_Doc\Coding\BudgetBuilder\BudgetBuilder\BudgetBuilder\obj\Debug\BudgetBuilder.Migrations.init.resources
-C:\Users\Anthony\Documents\_Doc\Coding\BudgetBuilder\BudgetBuilder\BudgetBuilder\obj\Debug\BudgetBuilder.csproj.GenerateResource.cache
 C:\Users\Anthony\Documents\_Doc\Coding\BudgetBuilder\BudgetBuilder\BudgetBuilder\obj\Debug\BudgetBuilder.csproj.CoreCompileInputs.cache
 C:\Users\Anthony\Documents\_Doc\Coding\BudgetBuilder\BudgetBuilder\BudgetBuilder\obj\Debug\BudgetBuilder.csproj.CopyComplete
 C:\Users\Anthony\Documents\_Doc\Coding\BudgetBuilder\BudgetBuilder\BudgetBuilder\obj\Debug\BudgetBuilder.dll
 C:\Users\Anthony\Documents\_Doc\Coding\BudgetBuilder\BudgetBuilder\BudgetBuilder\obj\Debug\BudgetBuilder.pdb
+C:\Users\Anthony\Documents\_Doc\Coding\BudgetBuilder\BudgetBuilder\BudgetBuilder\obj\Debug\BudgetBuilder.Migrations.Initial.resources
+C:\Users\Anthony\Documents\_Doc\Coding\BudgetBuilder\BudgetBuilder\BudgetBuilder\obj\Debug\BudgetBuilder.csproj.GenerateResource.cache

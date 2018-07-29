@@ -3,40 +3,40 @@ namespace BudgetBuilder.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class init : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
             CreateTable(
-                "dbo.BuildingModels",
+                "dbo.Buildings",
                 c => new
                     {
-                        BuildingModelsID = c.Int(nullable: false, identity: true),
+                        BuildingID = c.Int(nullable: false, identity: true),
                         Title = c.String(),
                         Budget = c.Double(nullable: false),
                         DateAdded = c.DateTime(),
                         DateModified = c.DateTime(),
                         ApplicationUserID = c.String(maxLength: 128),
                     })
-                .PrimaryKey(t => t.BuildingModelsID)
+                .PrimaryKey(t => t.BuildingID)
                 .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUserID)
                 .Index(t => t.ApplicationUserID);
             
             CreateTable(
-                "dbo.TradeModels",
+                "dbo.Trades",
                 c => new
                     {
-                        TradeModelsID = c.Int(nullable: false, identity: true),
+                        TradeID = c.Int(nullable: false, identity: true),
                         Category = c.Int(nullable: false),
                         SubCategory = c.String(),
                         MaterialCost = c.Double(nullable: false),
                         LaborCost = c.Double(nullable: false),
                         TradeBudget = c.Double(nullable: false),
-                        BuildingModelsID = c.Int(nullable: false),
+                        BuildingID = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.TradeModelsID)
-                .ForeignKey("dbo.BuildingModels", t => t.BuildingModelsID, cascadeDelete: true)
-                .Index(t => t.BuildingModelsID);
+                .PrimaryKey(t => t.TradeID)
+                .ForeignKey("dbo.Buildings", t => t.BuildingID, cascadeDelete: true)
+                .Index(t => t.BuildingID);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -116,23 +116,23 @@ namespace BudgetBuilder.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.BuildingModels", "ApplicationUserID", "dbo.AspNetUsers");
-            DropForeignKey("dbo.TradeModels", "BuildingModelsID", "dbo.BuildingModels");
+            DropForeignKey("dbo.Buildings", "ApplicationUserID", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Trades", "BuildingID", "dbo.Buildings");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.TradeModels", new[] { "BuildingModelsID" });
-            DropIndex("dbo.BuildingModels", new[] { "ApplicationUserID" });
+            DropIndex("dbo.Trades", new[] { "BuildingID" });
+            DropIndex("dbo.Buildings", new[] { "ApplicationUserID" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.TradeModels");
-            DropTable("dbo.BuildingModels");
+            DropTable("dbo.Trades");
+            DropTable("dbo.Buildings");
         }
     }
 }

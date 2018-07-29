@@ -15,7 +15,7 @@ namespace BudgetBuilder.Models
         public string LastName { get; set; }
 
         // Collection of Child BuildingModels
-        public ICollection<BuildingModels> Buildings { get; set; }
+        public ICollection<Building> Buildings { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

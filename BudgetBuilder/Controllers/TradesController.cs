@@ -14,54 +14,92 @@ namespace BudgetBuilder.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: TradeModels
+
+        public ActionResult Update(TradesUpdateModel request)
+        {
+
+            if (ModelState.IsValid)
+            {
+
+                db.Entry(request).State = EntityState.Modified;
+                db.SaveChanges();
+
+                List<Trade> trades = db.Buildings.Find(request.BuildingID).Trades.ToList();
+
+                return Json(new { Success = true, Trades = trades });
+            }
+
+            return Json(new { Success = false, Request = request });
+        }
+
+        [HttpPost]
+        public ActionResult UpdateTrades(Building request)
+        {
+            if (ModelState.IsValid)
+            {
+                DateTime timestamp = DateTime.Now;
+                request.DateModified = timestamp;
+
+                db.Entry(request).State = EntityState.Modified;
+                db.SaveChanges();
+
+                List<Trade> trades = db.Buildings.Find(request.BuildingID).Trades.ToList();
+
+                return Json(new { Success = true, Trades = trades });
+            }
+            return Json(new { Success = false });
+        }
+
+
+
+        // GET: Trades
         public ActionResult List(int? id)
         {
 
-            ViewBag.BuildingModelID = id;
+            ViewBag.BuildingID = id;
 
             // Return view of lists based on passed Building ID
-            var tradeModels = db.TradeModels.Include(t => t.Building).Where(pk => pk.BuildingModelsID == id);
+            var tradeModels = db.Trades.Include(t => t.BuildingID).Where(pk => pk.TradeID == id);
             return View(tradeModels.ToList());
 
         }
 
         [HttpPost]
-        public ActionResult Create([Bind(Include = "TradeModelsID,Category,SubCategory,MaterialCost,LaborCost,TradeBudget,TradeCost,BuildingModelsID")] TradeModels tradeModels)
+        public ActionResult Create([Bind(Include = "TradesID,Category,SubCategory,MaterialCost,LaborCost,TradeBudget,TradeCost,BuildingID")] Trade tradeModel)
         {
             if (ModelState.IsValid)
             {
-                db.TradeModels.Add(tradeModels);
+                db.Trades.Add(tradeModel);
                 db.SaveChanges();
-                return RedirectToAction("Index", new {id = tradeModels.BuildingModelsID});
+                return RedirectToAction("Index", new {id = tradeModel.BuildingID});
             }
 
-            ViewBag.BuildingModelsID = new SelectList(db.BuildingModels, "BuildingModelsID", "Title", tradeModels.BuildingModelsID);
-            return View(tradeModels);
+            ViewBag.BuildingID = new SelectList(db.Buildings, "BuildingID", "Title", tradeModel.BuildingID);
+            return View(tradeModel);
         }
 
-        // POST: TradeModels/Edit/5
+        // POST: Trades/Edit/5
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "TradeModelsID,Category,SubCategory,MaterialCost,LaborCost,TradeBudget,TradeCost,BuildingModelsID")] TradeModels tradeModels)
+        public ActionResult Edit([Bind(Include = "TradesID,Category,SubCategory,MaterialCost,LaborCost,TradeBudget,TradeCost,BuildingID")] Trade tradeModel)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tradeModels).State = EntityState.Modified;
+                db.Entry(tradeModel).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", new { id = tradeModels.BuildingModelsID });
+                return RedirectToAction("Index", new { id = tradeModel.BuildingID });
             }
-            ViewBag.BuildingModelsID = new SelectList(db.BuildingModels, "BuildingModelsID", "Title", tradeModels.BuildingModelsID);
-            return View(tradeModels);
+            ViewBag.BuildingID = new SelectList(db.Buildings, "BuildingID", "Title", tradeModel.BuildingID);
+            return View(tradeModel);
         }
 
-        // POST: TradeModels/Delete/5
+        // POST: Trades/Delete/5
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
         {
-            TradeModels tradeModels = db.TradeModels.Find(id);
-            db.TradeModels.Remove(tradeModels);
+            Trade tradeModel = db.Trades.Find(id);
+            db.Trades.Remove(tradeModel);
             db.SaveChanges();
-            return RedirectToAction("Index", new { id = tradeModels.BuildingModelsID });
+            return RedirectToAction("Index", new { id = tradeModel.BuildingID });
         }
 
         protected override void Dispose(bool disposing)

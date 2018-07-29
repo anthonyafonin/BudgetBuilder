@@ -22,22 +22,21 @@ namespace BudgetBuilder.Controllers
             // Store current User Id
             string userId = request.UserID;
      
-            // Select BuildingsModels where foreign key is equal to current User Id
-            var buildingModels = db.BuildingModels.Where(fk => fk.ApplicationUserID == userId)
-                .Select(r => new { r.Title, r.Budget, r.DateAdded, r.DateModified, r.BuildingModelsID, r.Trades }).ToList();
+            // Select Buildings where foreign key is equal to current User Id
+            var buildings = db.Buildings.Where(fk => fk.ApplicationUserID == userId).ToList();
     
-            return Json(new { Buildings = buildingModels });
+            return Json(new { Buildings = buildings });
         }
 
         [HttpPost]
         public ActionResult Details(BuildingRequestModel request)
         {
-            if (request.BuildingModelsID == null)
+            if (request.BuildingID == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            BuildingModels building = db.BuildingModels.Find(request.BuildingModelsID);
+            Building building = db.Buildings.Find(request.BuildingID);
             if (building != null)
             {
                 return Json(new { Building = building });
@@ -46,7 +45,7 @@ namespace BudgetBuilder.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(BuildingModels request)
+        public ActionResult Create(Building request)
         {
             bool success = false;
 
@@ -56,11 +55,11 @@ namespace BudgetBuilder.Controllers
                 request.DateAdded = timestamp;
                 request.DateModified = timestamp;
 
-                db.BuildingModels.Add(request);
+                db.Buildings.Add(request);
                 db.SaveChanges();
                 success = true;
 
-                BuildingModels building = db.BuildingModels.Find(request.BuildingModelsID);
+                Building building = db.Buildings.Find(request.BuildingID);
 
                 return Json(new { Success = success, Building = building });
             }
@@ -69,7 +68,7 @@ namespace BudgetBuilder.Controllers
         }
 
         [HttpPost]
-        public ActionResult Update(BuildingModels request)
+        public ActionResult Update(Building request)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +78,7 @@ namespace BudgetBuilder.Controllers
                 db.Entry(request).State = EntityState.Modified;
                 db.SaveChanges();
 
-                BuildingModels building = db.BuildingModels.Find(request.BuildingModelsID);
+                Building building = db.Buildings.Find(request.BuildingID);
 
                 return Json(new { Success = true, Building = building });
             }
@@ -89,8 +88,8 @@ namespace BudgetBuilder.Controllers
         [HttpPost]
         public ActionResult Delete(BuildingRequestModel request)
         {
-            BuildingModels building = db.BuildingModels.Find(request.BuildingModelsID);
-            db.BuildingModels.Remove(building);
+            Building building = db.Buildings.Find(request.BuildingID);
+            db.Buildings.Remove(building);
             db.SaveChanges();
             return Json(new { Success = true } );
         }

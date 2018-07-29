@@ -9,8 +9,7 @@ namespace BudgetBuilder.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+        public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
 
@@ -25,7 +24,7 @@ namespace BudgetBuilder.Models
         }
 
         //public System.Data.Entity.DbSet<ApplicationUser> ApplicationUser { get; set; }
-        public System.Data.Entity.DbSet<BudgetBuilder.Models.BuildingModels> BuildingModels { get; set; }
-        public System.Data.Entity.DbSet<BudgetBuilder.Models.TradeModels> TradeModels { get; set; }
+        public System.Data.Entity.DbSet<BudgetBuilder.Models.Building> Buildings { get; set; }
+        public System.Data.Entity.DbSet<BudgetBuilder.Models.Trade> Trades { get; set; }
     }
 }
