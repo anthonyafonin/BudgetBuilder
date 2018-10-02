@@ -14,13 +14,10 @@ namespace BudgetBuilder.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-
         public ActionResult Update(TradesUpdateModel request)
         {
-
             if (ModelState.IsValid)
             {
-
                 db.Entry(request).State = EntityState.Modified;
                 db.SaveChanges();
 
@@ -53,17 +50,18 @@ namespace BudgetBuilder.Controllers
 
 
         [HttpPost]
-        public ActionResult List(TradeListRequestModel request)
+        public ActionResult List(TradeRequestModel request)
         {
+            int? buildingId = request.BuildingID ?? null;
 
-            // Store current User Id
-            int buildingId = request.BuildingID;
+            if(buildingId != null)
+            {
+                // Select Buildings where foreign key is equal to current User Id
+                var trades = db.Trades.Where(fk => fk.BuildingID == buildingId).ToList();
 
-            // Select Buildings where foreign key is equal to current User Id
-            var trades = db.Trades.Where(fk => fk.BuildingID == buildingId).ToList();
-
-            return Json(new { Trades = trades });
-
+                return Json(new { Trades = trades });
+            }
+            return Json(new { Success = false });
         }
 
         [HttpPost]
@@ -85,28 +83,28 @@ namespace BudgetBuilder.Controllers
             return Json(new { Success = success });
         }
 
-        // POST: Trades/Edit/5
         [HttpPost]
-        public ActionResult Edit([Bind(Include = "TradesID,Category,SubCategory,MaterialCost,LaborCost,TradeBudget,TradeCost,BuildingID")] Trade tradeModel)
+        public ActionResult Update(Trade request)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(tradeModel).State = EntityState.Modified;
+                db.Entry(request).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index", new { id = tradeModel.BuildingID });
+
+                Trade trade = db.Trades.Find(request.TradeID);
+
+                return Json(new { Success = true, Trade = trade });
             }
-            ViewBag.BuildingID = new SelectList(db.Buildings, "BuildingID", "Title", tradeModel.BuildingID);
-            return View(tradeModel);
+            return Json(new { Success = false });
         }
 
-        // POST: Trades/Delete/5
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public ActionResult Delete(TradeRequestModel request)
         {
-            Trade tradeModel = db.Trades.Find(id);
-            db.Trades.Remove(tradeModel);
+            Trade trade = db.Trades.Find(request.TradeID);
+            db.Trades.Remove(trade);
             db.SaveChanges();
-            return RedirectToAction("Index", new { id = tradeModel.BuildingID });
+            return Json(new { Success = true });
         }
 
         protected override void Dispose(bool disposing)

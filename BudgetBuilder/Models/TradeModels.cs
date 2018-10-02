@@ -47,8 +47,9 @@ namespace BudgetBuilder.Models
         public ICollection<Trade> Trades { get; set; }
     }
 
-    public class TradeListRequestModel
+    public class TradeRequestModel
     {
-        public int BuildingID { get; set; }
+        public int TradeID { get; set; }
+        public int? BuildingID { get; set; }
     }
 }
