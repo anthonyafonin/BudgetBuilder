@@ -52,15 +52,17 @@ namespace BudgetBuilder.Controllers
 
 
 
-        // GET: Trades
-        public ActionResult List(int? id)
+        [HttpPost]
+        public ActionResult List(TradeListRequestModel request)
         {
 
-            ViewBag.BuildingID = id;
+            // Store current User Id
+            int buildingId = request.BuildingID;
 
-            // Return view of lists based on passed Building ID
-            var tradeModels = db.Trades.Include(t => t.BuildingID).Where(pk => pk.TradeID == id);
-            return View(tradeModels.ToList());
+            // Select Buildings where foreign key is equal to current User Id
+            var trades = db.Trades.Where(fk => fk.BuildingID == buildingId).ToList();
+
+            return Json(new { Trades = trades });
 
         }
 
