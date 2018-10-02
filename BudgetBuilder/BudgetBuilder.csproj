@@ -254,7 +254,7 @@
     <Folder Include="Content\less\app\mixins\" />
     <Folder Include="Content\less\app\page\" />
     <Folder Include="Content\src\components\" />
-    <Folder Include="Content\src\plugins\" />
+    <Folder Include="Content\src\services\plugins\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\dist\fonts\glyphicons-halflings-regular.woff" />
