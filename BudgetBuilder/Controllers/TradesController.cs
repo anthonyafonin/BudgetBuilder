@@ -67,17 +67,22 @@ namespace BudgetBuilder.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create([Bind(Include = "TradesID,Category,SubCategory,MaterialCost,LaborCost,TradeBudget,TradeCost,BuildingID")] Trade tradeModel)
+        public ActionResult Create(Trade request)
         {
+            bool success = false;
+
             if (ModelState.IsValid)
             {
-                db.Trades.Add(tradeModel);
+                db.Trades.Add(request);
                 db.SaveChanges();
-                return RedirectToAction("Index", new {id = tradeModel.BuildingID});
+                success = true;
+
+                Building building = db.Buildings.Find(request.BuildingID);
+
+                return Json(new { Success = success, Building = building });
             }
 
-            ViewBag.BuildingID = new SelectList(db.Buildings, "BuildingID", "Title", tradeModel.BuildingID);
-            return View(tradeModel);
+            return Json(new { Success = success });
         }
 
         // POST: Trades/Edit/5
